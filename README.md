@@ -37,7 +37,7 @@ syncLimit variable in conf/zoo.cfg.
 
 Directory where Zookeeper data is stored.
 
-	zookeeper_data_dir: /tmp/zookeeper/
+	zookeeper_data_dir: /opt/zookeeper/conf/data/
 
 Zookeeper client port.
 
@@ -49,7 +49,7 @@ maxClientCnxns variable in conf/zoo.cfg.
 
 Directory where Zookeeper logs are stored.
 
-	zookeeper_log_dir: /tmp/
+	zookeeper_log_dir: /var/log/zookeeper/
 
 
 Dependencies

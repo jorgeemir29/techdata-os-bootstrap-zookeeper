@@ -4,26 +4,19 @@
 
 tickTime={{ zookeeper_tick_time }}
 
-# The number of ticks that the initial
-# synchronization phase can take
-
+# The number of ticks that the initial synchronization phase can take
 initLimit={{ zookeeper_init_limit }}
-# The number of ticks that can pass between
-# sending a request and getting an acknowledgement
 
+# The number of ticks that can pass between sending a request and getting an acknowledgement
 syncLimit={{ zookeeper_sync_limit }}
 
-# the directory where the snapshot is stored.
-# do not use /tmp for storage, /tmp here is just
-# example sakes.
-
+# The directory where the snapshot is stored.
 dataDir={{ zookeeper_data_dir }}
 
-# the port at which the clients will connect
+# The port at which the clients will connect
 clientPort={{ zookeeper_client_port }}
 
-# the maximum number of client connections.
-# increase this if you need to handle more clients
+# The maximum number of client connections, increase this if you need to handle more clients
 maxClientCnxns={{ zookeeper_max_client_cnxns }}
 
 {% if zookeeper_4lw_whitelist is defined and zookeeper_4lw_whitelist|length > 0 %}
@@ -34,9 +27,8 @@ maxClientCnxns={{ zookeeper_max_client_cnxns }}
 4lw.commands.whitelist={% for flw in zookeeper_4lw_whitelist|sort %}{{ flw }}{% if not loop.last %}, {% endif %}{% endfor %}
 {% endif %}
 
+# Zookeeper Cluster Nodes:
 {% for host in groups[zookeeper_ansible_host_group]|sort %}
-
-# I am Host: {{ host }} in Cluster.
 server.{{ hostvars[host].zookeeper_id }}={{ hostvars[host][zookeeper_server_variable] }}:{{ zookeeper_leader_port|default('2888') }}:{{ zookeeper_election_port|default('3888') }}
 {% endfor %}
 
