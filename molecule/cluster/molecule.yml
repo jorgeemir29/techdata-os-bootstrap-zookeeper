@@ -9,7 +9,35 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: instance-1
+  - name: instance-ubuntu-1
+    image: "percygrunwald/docker-ubuntu1804-ansible:latest"
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    groups:
+     - zookeeper
+  - name: instance-ubuntu-2
+    image: "percygrunwald/docker-ubuntu1804-ansible:latest"
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    groups:
+     - zookeeper
+  - name: instance-ubuntu-3
+    image: "percygrunwald/docker-ubuntu1804-ansible:latest"
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    groups:
+     - zookeeper
+
+  - name: instance-RHEL-1
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -18,7 +46,7 @@ platforms:
     pre_build_image: true
     groups:
       - zookeeper
-  - name: instance-2
+  - name: instance-RHEL-2
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -27,7 +55,7 @@ platforms:
     pre_build_image: true
     groups:
       - zookeeper
-  - name: instance-3
+  - name: instance-RHEL-3
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -45,12 +73,20 @@ provisioner:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
   inventory:
     host_vars:
-      instance-1:
-        zookeeper_id: 0
-      instance-2:
+
+      instance-RHEL-1:
         zookeeper_id: 1
-      instance-3:
+      instance-RHEL-2:
         zookeeper_id: 2
+      instance-RHEL-3:
+        zookeeper_id: 3
+
+      instance-ubuntu-1:
+        zookeeper_id: 1
+      instance-ubuntu-2:
+        zookeeper_id: 2
+      instance-ubuntu-3:
+        zookeeper_id: 1
 scenario:
   name: cluster
 verifier:

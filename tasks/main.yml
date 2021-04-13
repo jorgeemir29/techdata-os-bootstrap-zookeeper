@@ -17,7 +17,7 @@
     groups: "{{ zookeeper_service_group }}"
     append: true
 
-- name: "OS: Install Java v-{{ zookeeper_java_version }}: {{ zookeeper_java_package[zookeeper_java_version] }}"
+- name: "OS: Install Java {{ zookeeper_java_version }}: {{ zookeeper_java_package[zookeeper_java_version] }}"
   package:
     name: "{{ item }}"
   with_items: "{{ zookeeper_java_package[zookeeper_java_version] }}"
@@ -67,7 +67,7 @@
     state: link
   when: not zookeeper_path.stat.exists
 
-- name: "APP-CONFIG: Create the Zookeeper config file"
+- name: "APP-CONFIG: Create the Zookeeper Configuration file"
   template:
     src: zoo.cfg.j2
     dest: /opt/zookeeper/conf/zoo.cfg
