@@ -47,6 +47,15 @@
     mode: '0755'
   when: not zookeeper_path.stat.exists
 
+- name: "OS: Create the Zookeeper Logs Directory"
+  file:
+    path: "{{ zookeeper_log_dir }}"
+    state: directory
+    owner: "{{ zookeeper_service_username }}"
+    group: "{{ zookeeper_service_group }}"
+    mode: '0755'
+  when: not zookeeper_path.stat.exists
+
 - name: "OPS: Extract Zookeeper to Home | Installation Directory"
   unarchive:
     src: "/tmp/zookeeper-{{ zookeeper_version }}.tar.gz"
